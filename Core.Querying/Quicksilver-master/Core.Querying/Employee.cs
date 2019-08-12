@@ -9,7 +9,7 @@ namespace Core.Querying
     public class Employee
     {
         public string Name { get; set; }
-        public string Age { get; set; }
+        public int Age { get; set; }
         public bool Gender { get; set; }
     }
 }

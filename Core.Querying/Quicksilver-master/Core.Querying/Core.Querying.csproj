@@ -308,6 +308,8 @@
     <Compile Include="IContentDataQuery.cs" />
     <Compile Include="IContentDataQueryFactory.cs" />
     <Compile Include="IContentDataQueryHandler.cs" />
+    <Compile Include="Infrastructure\Initialization\DependencyResolverInitialization.cs" />
+    <Compile Include="Infrastructure\Ioc\ServiceLocatorDependencyResolver.cs" />
     <Compile Include="ISearchEngine.cs" />
     <Compile Include="Models\ContentCount.cs" />
     <Compile Include="Models\EmptyContentResult.cs" />
@@ -328,6 +330,9 @@
   <ItemGroup>
     <Folder Include="ConcurrentQueue\" />
     <Folder Include="FacetRegistry\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Task.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

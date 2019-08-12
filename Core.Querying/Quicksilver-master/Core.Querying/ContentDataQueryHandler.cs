@@ -1,4 +1,5 @@
-﻿using EPiServer.Find;
+﻿using EPiServer.Core;
+using EPiServer.Find;
 using EPiServer.ServiceLocation;
 
 namespace Core.Querying
