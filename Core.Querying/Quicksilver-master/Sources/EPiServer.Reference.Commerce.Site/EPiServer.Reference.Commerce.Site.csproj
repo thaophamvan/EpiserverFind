@@ -954,8 +954,8 @@
     <Content Include="Views\Shared\_Facet.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.Querying\Core.Querying.csproj">
-      <Project>{fb37ae6c-686d-4fba-ba35-529f8de60574}</Project>
+    <ProjectReference Include="..\..\Core.Querying\Core.Querying.csproj">
+      <Project>{013b2c3f-26e7-4402-a99d-7ee640858154}</Project>
       <Name>Core.Querying</Name>
     </ProjectReference>
     <ProjectReference Include="..\EPiServer.Reference.Commerce.Shared\EPiServer.Reference.Commerce.Shared.csproj">
@@ -1057,10 +1057,6 @@
     </Reference>
     <Reference Include="Mediachase.Commerce, Culture=neutral, PublicKeyToken=6e58b501b34abce3, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EPiServer.Commerce.Core.13.6.0\lib\net461\Mediachase.Commerce.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mediachase.Commerce.Marketing.Validators, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EPiServer.Commerce.Core.13.6.0\lib\net461\Mediachase.Commerce.Marketing.Validators.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mediachase.Commerce.Plugins.Payment, Culture=neutral, processorArchitecture=MSIL">

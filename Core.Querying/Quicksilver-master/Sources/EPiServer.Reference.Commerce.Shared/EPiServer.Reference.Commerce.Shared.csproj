@@ -286,10 +286,6 @@
       <HintPath>..\..\packages\EPiServer.Commerce.Core.13.6.0\lib\net461\Mediachase.Commerce.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mediachase.Commerce.Marketing.Validators, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EPiServer.Commerce.Core.13.6.0\lib\net461\Mediachase.Commerce.Marketing.Validators.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Mediachase.Commerce.Plugins.Payment, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EPiServer.Commerce.Core.13.6.0\lib\net461\Mediachase.Commerce.Plugins.Payment.dll</HintPath>
       <Private>True</Private>
