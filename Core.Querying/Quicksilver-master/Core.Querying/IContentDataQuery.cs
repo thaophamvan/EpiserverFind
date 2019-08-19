@@ -53,55 +53,6 @@ namespace Core.Querying
         ITypeSearch<TContentData> IncludeWasteBasket();
 
         /// <summary>
-        /// Sorts the pages in a sequence in ascending order according to a key.
-        /// </summary>
-        /// <typeparam name="TKey">
-        /// The type of the key returned by the function that is represented 
-        /// by keySelector.
-        /// </typeparam>
-        /// <param name="keySelector">A function to extract a key from a page.</param>
-        /// <returns>
-        /// A ITypeSearch<TContentData/> whose elements are sorted according to a key.
-        /// </returns>
-        ITypeSearch<TContentData> OrderBy<TKey>(Expression<Func<TContentData, TKey>> keySelector);
-
-        /// <summary>
-        /// Sorts the pages in a sequence in descending order according to a key.
-        /// </summary>
-        /// <typeparam name="TKey">
-        /// The type of the key returned by the function that is represented 
-        /// by keySelector.
-        /// </typeparam>
-        /// <param name="keySelector">A function to extract a key from a page.</param>
-        /// <returns>
-        /// A ITypeSearch<TContentData/> whose elements are sorted 
-        /// in descending order according to a key.
-        /// </returns>
-        ITypeSearch<TContentData> OrderByDescending<TKey>(Expression<Func<TContentData, TKey>> keySelector);
-
-        /// <summary>
-        /// Bypasses a specified number of pages in a sequence and then returns 
-        /// the remaining pages.
-        /// </summary>
-        /// <param name="count">
-        /// The number of pages to skip before returning the remaining pages.
-        /// </param>
-        /// <returns>
-        /// A ITypeSearch<TContentData/> that contains the pages that occur 
-        /// after the specified index in the input sequence.
-        /// </returns>
-        ITypeSearch<TContentData> Skip(int count);
-
-        /// <summary>
-        /// Returns a specified number of contiguous pages from the start of a pages sequence.
-        /// </summary>
-        /// <param name="count">The number of elements to return.</param>
-        /// <returns>
-        /// A ITypeSearch<TContentData/> that contains the specified number of 
-        /// elements from the start of the input pages sequence.</returns>
-        ITypeSearch<TContentData> Take(int count);
-
-        /// <summary>
         /// Applies additional filtering: only published pages ignoring <see cref="PageData.StartPublish"/> and <see cref="PageData.StopPublish"/> dates.
         /// </summary>
         /// <returns>Filtered query.</returns>
@@ -130,8 +81,6 @@ namespace Core.Querying
         /// <param name="type">List of types to find.</param>
         /// <returns>Returns query with applied filter by types.</returns>
         ITypeSearch<TContentData> OfType(params Type[] type);
-
-        int TakeCount { get; }
 
         ITypeSearch<TContentData> FreeTextSearch(string query, IEnumerable<Expression<Func<TContentData, string>>> propertyExpressions, int minMatch = 0);
 

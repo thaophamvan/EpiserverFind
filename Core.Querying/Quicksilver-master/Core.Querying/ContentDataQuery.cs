@@ -48,30 +48,11 @@ namespace Core.Querying
 
         public ITypeSearch<TContentData> ChildrenOf(ContentReference parentLink)
         {
-            throw new NotImplementedException();
+            var results = _searchClient.Search<TContentData>().Filter(p => p.ParentLink.Equals(parentLink).Match(true));
+            return results;
         }
 
         public ITypeSearch<TContentData> IncludeWasteBasket()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TContentData> OrderBy<TKey>(Expression<Func<TContentData, TKey>> keySelector)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TContentData> OrderByDescending<TKey>(Expression<Func<TContentData, TKey>> keySelector)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TContentData> Skip(int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TContentData> Take(int count)
         {
             throw new NotImplementedException();
         }
