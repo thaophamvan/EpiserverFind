@@ -91,6 +91,9 @@ namespace EPiServer.Reference.Commerce.Site.Infrastructure
 
             services.AddSingleton<ServiceAccessor<IContentRouteHelper>>(locator => locator.GetInstance<IContentRouteHelper>);
 
+            // TODO: get max count from web.config
+            services.AddSingleton<ITicketProvider>(new SelfDestructingTicketProvider(25, TimeSpan.FromSeconds(1)));
+
             DependencyResolver.SetResolver(new StructureMapDependencyResolver(context.StructureMap()));
             GlobalConfiguration.Configure(config =>
             {
