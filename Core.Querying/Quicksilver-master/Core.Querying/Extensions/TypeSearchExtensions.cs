@@ -60,7 +60,6 @@ namespace Core.Querying.Extensions
         /// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
         /// <param name="filterExpression">The filter expression.</param>
         /// <returns>Updated search.</returns>
-        [Obsolete("Use the Conditional method instead")]
         public static ITypeSearch<TSource> ConditionalFilter<TSource>(
             this ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
         {
@@ -72,23 +71,23 @@ namespace Core.Querying.Extensions
             return search.Filter<TSource>(filterExpression);
         }
 
-        /// <summary>
-        /// Add a filter expression if the condition is true
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="search">The search.</param>
-        /// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
-        /// <param name="request">The filter expression.</param>
-        /// <returns>Updated search.</returns>
-        public static ITypeSearch<TSource> Conditional<TSource>(this ITypeSearch<TSource> search, bool condition,
-            Func<ITypeSearch<TSource>, ITypeSearch<TSource>> request)
-        {
-            if (!condition)
-            {
-                return search;
-            }
-            return request(search);
-        }
+        ///// <summary>
+        ///// Add a filter expression if the condition is true
+        ///// </summary>
+        ///// <typeparam name="TSource">The type of the source.</typeparam>
+        ///// <param name="search">The search.</param>
+        ///// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
+        ///// <param name="request">The filter expression.</param>
+        ///// <returns>Updated search.</returns>
+        //public static ITypeSearch<TSource> Conditional<TSource>(this ITypeSearch<TSource> search, bool condition,
+        //    Func<ITypeSearch<TSource>, ITypeSearch<TSource>> request)
+        //{
+        //    if (!condition)
+        //    {
+        //        return search;
+        //    }
+        //    return request(search);
+        //}
 
         /// <summary>
         /// Gets term facets for a given field.
