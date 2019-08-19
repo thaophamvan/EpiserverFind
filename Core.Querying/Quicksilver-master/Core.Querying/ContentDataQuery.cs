@@ -78,7 +78,6 @@ namespace Core.Querying
             throw new NotImplementedException();
         }
 
-        public int TakeCount { get; }
         public ITypeSearch<TContentData> FreeTextSearch(string query, IEnumerable<Expression<Func<TContentData, string>>> propertyExpressions, int minMatch = 0)
         {
             throw new NotImplementedException();
