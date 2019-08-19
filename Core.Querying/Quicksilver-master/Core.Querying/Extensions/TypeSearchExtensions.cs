@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Core.Querying.ConcurrentQueue;
 using Core.Querying.Models;
 using EPiServer.Core;
 using EPiServer.Find;
@@ -236,6 +239,15 @@ namespace Core.Querying.Extensions
                 contentResult = new EmptyUnifiedSearchResults();
             }
             return contentResult;
+        }
+        public static async Task<IContentResult<TContentData>> GetResultAsync<TContentData>(this ITypeSearch<TContentData> search,
+            ITicketProvider ticketProvider,
+            int cacheForSeconds = 60,
+            bool cacheForEditorsAndAdmins = false) where TContentData : IContentData
+        {
+            await ticketProvider.WaitAsync(CancellationToken.None);
+
+            return search.GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins);
         }
     }
 }

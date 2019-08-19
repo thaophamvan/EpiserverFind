@@ -78,9 +78,9 @@ namespace Core.Querying
         /// <summary>
         /// Find ContentData with specified types.
         /// </summary>
-        /// <param name="type">List of types to find.</param>
+        /// <param name="types">List of types to find.</param>
         /// <returns>Returns query with applied filter by types.</returns>
-        ITypeSearch<TContentData> OfType(params Type[] type);
+        ITypeSearch<TContentData> OfType(params Type[] types);
 
         ITypeSearch<TContentData> FreeTextSearch(string query, IEnumerable<Expression<Func<TContentData, string>>> propertyExpressions, int minMatch = 0);
 

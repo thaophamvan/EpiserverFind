@@ -296,6 +296,7 @@
     <Compile Include="AutoComplete\ContentReferenceCollectionAutoCompleteControllerBase.cs" />
     <Compile Include="AutoComplete\IAutoCompleteController.cs" />
     <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
+    <Compile Include="ConcurrentQueue\ITicketProvider.cs" />
     <Compile Include="ContentDataQuery.cs" />
     <Compile Include="ContentDataQueryFactory.cs" />
     <Compile Include="ContentDataQueryHandler.cs" />
@@ -328,7 +329,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ConcurrentQueue\" />
     <Folder Include="FacetRegistry\" />
   </ItemGroup>
   <ItemGroup>

@@ -476,7 +476,6 @@
     <Compile Include="Features\Start\ViewModels\PromotionViewModel.cs" />
     <Compile Include="Features\Start\ViewModels\StartPageViewModel.cs" />
     <Compile Include="Features\Test\TestController.cs" />
-    <Compile Include="Features\Test\TypeSearchExtensions.cs" />
     <Compile Include="Features\Warehouse\Controllers\WarehouseController.cs" />
     <Compile Include="Features\Warehouse\Models\WarehouseAvailability.cs" />
     <Compile Include="Features\Warehouse\Services\IWarehouseService.cs" />

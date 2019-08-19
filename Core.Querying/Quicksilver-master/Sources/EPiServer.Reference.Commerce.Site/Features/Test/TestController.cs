@@ -20,18 +20,19 @@ namespace EPiServer.Reference.Commerce.Site.Features.Test
         }
 
         // GET: Test
-        public async Task<ActionResult> Index(int q = 100)
-        {
-            var searchTasks = Enumerable.Range(1, q).Select(i => SearchAsync(_ticketProvider, i));
+        //public async Task<ActionResult> Index(int q = 100)
+        //{
+        //    var searchTasks = Enumerable.Range(1, q).Select(i => SearchAsync(_ticketProvider, i));
 
-            var searchResults = await Task.WhenAll(searchTasks);
+        //    var searchResults = await Task.WhenAll(searchTasks);
 
-            return Content(JsonConvert.SerializeObject(searchResults));
-        }
+        //    return Content(JsonConvert.SerializeObject(searchResults));
+        //}
 
-        private async Task<SearchResults<Employee>> SearchAsync(ITicketProvider ticketProvider, int i)
-        {
-            return await _client.Search<Employee>().Filter(x => x.Name.Match($"ABC {i}")).GetResultAsync(ticketProvider);
-        }
+        //private async Task<SearchResults<Employee>> SearchAsync(ITicketProvider ticketProvider, int i)
+        //{
+        //    //return await _client.Search<Employee>().Filter(x => x.Name.Match($"ABC {i}")).GetResultAsync(ticketProvider);
+            
+        //}
     }
 }
