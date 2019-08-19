@@ -83,9 +83,11 @@ namespace Core.Querying
             throw new NotImplementedException();
         }
 
-        public ITypeSearch<TContentData> FreeTextSearch(string query, IEnumerable<Expression<Func<TContentData, string>>> propertyExpressions, int minMatch = 0)
+        public ITypeSearch<TContentData> FreeTextSearch(string query)
         {
-            throw new NotImplementedException();
+            var searchResult = _searchClient.Search<TContentData>()
+                .For(query);
+            return searchResult;
         }
 
         public ITypeSearch<TBlock> BlockSearch<TBlock>() where TBlock : BlockData

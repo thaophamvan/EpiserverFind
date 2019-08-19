@@ -82,7 +82,7 @@ namespace Core.Querying
         /// <returns>Returns query with applied filter by types.</returns>
         ITypeSearch<TContentData> OfType(params Type[] types);
 
-        ITypeSearch<TContentData> FreeTextSearch(string query, IEnumerable<Expression<Func<TContentData, string>>> propertyExpressions, int minMatch = 0);
+        ITypeSearch<TContentData> FreeTextSearch(string query);
 
         ITypeSearch<TBlock> BlockSearch<TBlock>() where TBlock : BlockData;
 
