@@ -33,8 +33,8 @@ namespace Core.Querying
         #endregion
 
         /// <summary>
-        /// <para>Produces a <see cref="ContentData" /> - query over pages of the given type.</para>
-        /// <para>Search is performed in first and single CorePageProvider of current site.</para>
+        /// 
+        /// <para>Create search engine.</para>
         /// </summary>
 
         public IClient Create()

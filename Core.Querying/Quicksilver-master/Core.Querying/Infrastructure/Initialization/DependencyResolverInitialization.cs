@@ -16,7 +16,7 @@ namespace Core.Querying.Infrastructure.Initialization
             context.ConfigurationComplete += (o, e) =>
             {
                 context.Services.AddTransient<IContentDataQueryFactory, ContentDataQueryFactory>();
-                context.Services.AddTransient<IContentDataQuery<IContentData>, ContentDataQuery<IContentData>>();
+                context.Services.AddTransient<IContentDataQuery<IContent>, ContentDataQuery<IContent>>();
                 context.Services.AddSingleton<IContentDataQueryHandler, ContentDataQueryHandler>();
             };
         }

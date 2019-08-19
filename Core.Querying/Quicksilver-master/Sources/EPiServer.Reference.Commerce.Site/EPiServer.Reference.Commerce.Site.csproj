@@ -474,6 +474,7 @@
     <Compile Include="Features\Shared\Pages\StandardPage.cs" />
     <Compile Include="Features\Start\ViewModels\PromotionViewModel.cs" />
     <Compile Include="Features\Start\ViewModels\StartPageViewModel.cs" />
+    <Compile Include="Features\Test\TestController.cs" />
     <Compile Include="Features\Warehouse\Controllers\WarehouseController.cs" />
     <Compile Include="Features\Warehouse\Models\WarehouseAvailability.cs" />
     <Compile Include="Features\Warehouse\Services\IWarehouseService.cs" />
@@ -963,7 +964,9 @@
       <Name>EPiServer.Reference.Commerce.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

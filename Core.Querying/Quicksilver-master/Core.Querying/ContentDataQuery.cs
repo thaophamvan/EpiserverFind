@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Web.UI.WebControls;
+using Core.Querying.Extensions;
 using EPiCode.DynamicMultiSearch;
+using EPiServer.Cms.Shell;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
 using EPiServer.Find;
@@ -16,64 +20,25 @@ using EPiServer.Security;
 namespace Core.Querying
 {
     /// <summary>
-    /// Provides functionality to evaluate queries against a CorePageProvider.
+    /// Provides functionality to evaluate queries against a ContentData.
     /// </summary>
     /// <typeparam name="TContentData">
-    /// The type of the pages to query. This type parameter is covariant. 
+    /// The type of the ContentData to query.
     /// That is, you can use either the type you specified or any type 
     /// that is more derived.
     /// </typeparam>
-    public class ContentDataQuery<TContentData> : IContentDataQuery<TContentData>
+    public class ContentDataQuery<TContentData> : IContentDataQuery<TContentData> where TContentData : IContent
     {
-        public IEnumerable<TContentData> UnCachedResult(bool asAnyVersion = false)
+        private readonly IClient _searchClient = ContentDataQueryHandler.Instance.Create();
+        public IEnumerable<PageReference> UnCachedContentReferencesResult()
         {
             throw new NotImplementedException();
         }
 
-        public IContentResult<TContentData> UnCachedResult<TContentData>(ITypeSearch<TContentData> search, int cacheForSeconds = 60,
-            bool cacheForEditorsAndAdmins = false) where TContentData : IContentData
+        public IEnumerable<ContentReference> ContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TContentData> UnCachedResult(string pageProviderKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TContentData> Result(string pageProviderKey, string cacheKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TContentData> Result(string cacheKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<TContentData> Result(string cacheKey, Func<ReadOnlyCollection<PageReference>> getReferences)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<PageReference> UnCachedPageReferencesResult()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<PageReference> PageReferencesResult(string cacheKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TSource> Where<TSource>(ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
-        {
-            return search.Filter<TSource>(filterExpression);
-        }
-
-        public ITypeSearch<TSource> Where<TSource>(ITypeSearch<TSource> search, Func<ITypeSearch<TSource>, ITypeSearch<TSource>> request)
-        {
-            return request(search);
+            var results = _searchClient.Search<TContentData>().GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins).Items;
+            return results.Select(i => i.ContentLink);
         }
 
         public ITypeSearch<TContentData> FilterBySiteId(string siteId)
@@ -81,7 +46,7 @@ namespace Core.Querying
             throw new NotImplementedException();
         }
 
-        public ITypeSearch<TContentData> ChildrenOf(PageReference parentLink)
+        public ITypeSearch<TContentData> ChildrenOf(ContentReference parentLink)
         {
             throw new NotImplementedException();
         }
@@ -118,7 +83,8 @@ namespace Core.Querying
 
         public ITypeSearch<TContentData> Published()
         {
-            throw new NotImplementedException();
+            var results = _searchClient.Search<TContentData>().Filter(p => p.IsPublished().Match(true));
+            return results;
         }
 
         public ITypeSearch<TContentData> InRemoteSite(string remoteSite)
@@ -143,6 +109,11 @@ namespace Core.Querying
         }
 
         public ITypeSearch<TPage> PageSearch<TPage>() where TPage : PageData
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : NodeContentBase
         {
             throw new NotImplementedException();
         }
@@ -183,11 +154,6 @@ namespace Core.Querying
         }
 
         public ITypeSearch<ISearchContent> GeneralUnifiedSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ContentData
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : NodeContentBase
         {
             throw new NotImplementedException();
         }

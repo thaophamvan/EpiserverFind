@@ -11,7 +11,7 @@ namespace Core.Querying
                 case SearchEngineType.EpiserverFind:
                     return new EpiserverFind();
                 default:
-                    throw new NotImplementedException("This bank type is unsupported");
+                    throw new NotImplementedException("This search type is unsupported");
             }
         }
     }
