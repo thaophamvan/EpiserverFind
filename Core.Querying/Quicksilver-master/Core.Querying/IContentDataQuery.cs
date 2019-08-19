@@ -21,7 +21,7 @@ namespace Core.Querying
         /// The query is executed without caching. Use with caution.
         /// </summary>
         /// <returns>ContentReference to the pages that match the query.</returns>
-        IEnumerable<PageReference> UnCachedContentReferencesResult();
+        IEnumerable<ContentReference> UnCachedContentReferencesResult();
 
         /// <summary>
         /// Executes the query returning only the ContentReference for each matching page.

@@ -14,6 +14,7 @@ using EPiServer.Find;
 using EPiServer.Find.Api.Querying;
 using EPiServer.Find.Cms;
 using EPiServer.Find.Framework;
+using EPiServer.Find.Helpers;
 using EPiServer.Find.UnifiedSearch;
 using EPiServer.Security;
 
@@ -30,9 +31,10 @@ namespace Core.Querying
     public class ContentDataQuery<TContentData> : IContentDataQuery<TContentData> where TContentData : IContent
     {
         private readonly IClient _searchClient = ContentDataQueryHandler.Instance.Create();
-        public IEnumerable<PageReference> UnCachedContentReferencesResult()
+        public IEnumerable<ContentReference> UnCachedContentReferencesResult()
         {
-            throw new NotImplementedException();
+            var results = _searchClient.Search<TContentData>().GetContentResult().Items;
+            return results.Select(i => i.ContentLink);
         }
 
         public IEnumerable<ContentReference> ContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)
@@ -48,18 +50,21 @@ namespace Core.Querying
 
         public ITypeSearch<TContentData> ChildrenOf(ContentReference parentLink)
         {
-            var results = _searchClient.Search<TContentData>().Filter(p => p.ParentLink.Equals(parentLink).Match(true));
+            var results = _searchClient.Search<TContentData>().Filter(p => p.ParentLink.Match(parentLink));
             return results;
         }
 
         public ITypeSearch<TContentData> IncludeWasteBasket()
         {
-            throw new NotImplementedException();
+            var results = _searchClient.Search<TContentData>().Filter(p => p.IsDeleted.Match(false));
+            return results;
         }
 
         public ITypeSearch<TContentData> PublishedIgnoreDates()
         {
-            throw new NotImplementedException();
+            var results = _searchClient.Search<TContentData>().Filter(p=>(p as IVersionable).IsNotNull().Match(true))
+                .Filter(p => (p as IVersionable).Status.Match(VersionStatus.Published));
+            return results;
         }
 
         public ITypeSearch<TContentData> Published()
