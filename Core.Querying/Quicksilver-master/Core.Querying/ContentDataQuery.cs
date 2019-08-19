@@ -56,7 +56,7 @@ namespace Core.Querying
 
         public ITypeSearch<TContentData> IncludeWasteBasket()
         {
-            var results = _searchClient.Search<TContentData>().Filter(p => p.IsDeleted.Match(false));
+            var results = _searchClient.Search<TContentData>().Filter(p => p.IsDeleted.Match(true));
             return results;
         }
 
