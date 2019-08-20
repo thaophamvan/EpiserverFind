@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Core.Querying.ConcurrentQueue;
 using Core.Querying.Models;
 using EPiServer.Core;
@@ -17,6 +19,8 @@ using EPiServer.Find.Helpers;
 using EPiServer.Find.Helpers.Reflection;
 using EPiServer.Find.UnifiedSearch;
 using EPiServer.Logging;
+using Polly;
+using Polly.CircuitBreaker;
 
 namespace Core.Querying.Extensions
 {
@@ -248,6 +252,24 @@ namespace Core.Querying.Extensions
             await ticketProvider.WaitAsync(CancellationToken.None);
 
             return search.GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins);
+        }
+
+        public static  IContentResult<TContentData> GetContentResultThroughCircuitBreaker<TContentData>(
+            this ITypeSearch<TContentData> search,
+            CircuitBreakerPolicy breakerPolicy,
+            int cacheForSeconds = 60,
+            bool cacheForEditorsAndAdmins = false) where TContentData : IContentData
+        {
+            return breakerPolicy.Execute(() => search.GetContentResult(cacheForSeconds, cacheForEditorsAndAdmins));
+        }
+
+        public static async Task<IContentResult<TContentData>> GetContentResultThroughCircuitBreakerAsync<TContentData>(
+            this ITypeSearch<TContentData> search,
+            AsyncCircuitBreakerPolicy breakerPolicy,
+            int cacheForSeconds = 60,
+            bool cacheForEditorsAndAdmins = false) where TContentData : IContentData
+        {
+            return breakerPolicy.Execute(() => search.GetContentResult(cacheForSeconds, cacheForEditorsAndAdmins));
         }
     }
 }
