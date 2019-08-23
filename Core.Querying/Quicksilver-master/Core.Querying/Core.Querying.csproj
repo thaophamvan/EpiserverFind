@@ -306,6 +306,41 @@
     <Compile Include="Extensions\CategorizableContentExtensions.cs" />
     <Compile Include="Extensions\HasFacetResultsExtensions.cs" />
     <Compile Include="Extensions\TypeSearchExtensions.cs" />
+    <Compile Include="Find\Conventions\SiteCatalogContentClientConventions.cs" />
+    <Compile Include="Find\EventListeners\SiteCatalogContentEventListener.cs" />
+    <Compile Include="Find\Extensions\Content\ProductContentExtensions.cs" />
+    <Compile Include="Find\Extensions\Content\VariationExtensions.cs" />
+    <Compile Include="Find\Extensions\FacetBuilders\FacetBuilderExtensions.cs" />
+    <Compile Include="Find\Extensions\FilterBuilders\CatalogContentBaseFilterBuilderExtensions.cs" />
+    <Compile Include="Find\Extensions\FilterBuilders\ContentBaseFilterBuilderExtensions.cs" />
+    <Compile Include="Find\Extensions\FilterBuilders\GenericFilterBuilderExtensions.cs" />
+    <Compile Include="Find\Extensions\PagedExtension.cs" />
+    <Compile Include="Find\Extensions\QueryBuilders\WildCardQueryBuilderExtensions.cs" />
+    <Compile Include="Find\Extensions\SortBuilders\SortBuilderExtensions.cs" />
+    <Compile Include="Find\FacetRegistry\FacetRegistry.cs" />
+    <Compile Include="Find\FacetRegistry\FacetRegistryInitializationModule.cs" />
+    <Compile Include="Find\FacetRegistry\IFacetRegistry.cs" />
+    <Compile Include="Find\Helpers\AssemblyHelper.cs" />
+    <Compile Include="Find\Helpers\CategoryHelper.cs" />
+    <Compile Include="Find\Helpers\FacetHelper.cs" />
+    <Compile Include="Find\Helpers\PropertyInfoHelper.cs" />
+    <Compile Include="Find\Interfaces\IIndexService.cs" />
+    <Compile Include="Find\Interfaces\ISearchService.cs" />
+    <Compile Include="Find\Models\Availability\PriceRange.cs" />
+    <Compile Include="Find\Models\Availability\ProductAvailability.cs" />
+    <Compile Include="Find\Models\Request\FacetSpecification.cs" />
+    <Compile Include="Find\Models\Request\FilterSpecification.cs" />
+    <Compile Include="Find\Models\Request\ISearchRequest.cs" />
+    <Compile Include="Find\Models\Request\SearchRequest.cs" />
+    <Compile Include="Find\Models\Request\SortSpecification.cs" />
+    <Compile Include="Find\Models\Response\FacetFilter.cs" />
+    <Compile Include="Find\Models\Response\FacetGroup.cs" />
+    <Compile Include="Find\Models\Response\IPagedList.cs" />
+    <Compile Include="Find\Models\Response\PagedList.cs" />
+    <Compile Include="Find\Models\Response\SearchResponse.cs" />
+    <Compile Include="Find\SearchRequests\ProductSearchRequest.cs" />
+    <Compile Include="Find\Services\IndexService.cs" />
+    <Compile Include="Find\Services\SearchService.cs" />
     <Compile Include="IContentDataQuery.cs" />
     <Compile Include="IContentDataQueryFactory.cs" />
     <Compile Include="IContentDataQueryHandler.cs" />
@@ -317,10 +352,10 @@
     <Compile Include="Models\EmptyUnifiedSearchResults.cs" />
     <Compile Include="Models\ICategorizableContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryBuilder\FacetBuilder.cs" />
-    <Compile Include="QueryBuilder\FilterBuilder.cs" />
-    <Compile Include="QueryBuilder\SortBuilder.cs" />
     <Compile Include="SearchEngineType.cs" />
+    <Compile Include="Shared\FindConstants.cs" />
+    <Compile Include="Shared\FindEnums.cs" />
+    <Compile Include="Shared\StringConstants.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -328,9 +363,7 @@
     <None Include="modules\_protected\EPiCode.InspectInIndex\EPiCode.InspectInIndex.zip" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FacetRegistry\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Task.txt" />
   </ItemGroup>

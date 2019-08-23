@@ -6,6 +6,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web.UI.WebControls;
 using Core.Querying.Extensions;
+using Core.Querying.Find.Extensions.FilterBuilders;
+using Core.Querying.Find.Extensions.QueryBuilders;
+using Core.Querying.Find.Extensions.SortBuilders;
+using Core.Querying.Find.Models.Request;
 using EPiCode.DynamicMultiSearch;
 using EPiServer.Cms.Shell;
 using EPiServer.Commerce.Catalog.ContentTypes;
@@ -118,6 +122,80 @@ namespace Core.Querying
         public ITypeSearch<TEntry> ProductSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ProductContent
         {
             throw new NotImplementedException();
+        }
+
+        public ITypeSearch<TEntry> GeneralSearch<TEntry>(ISearchRequest request) where TEntry : CatalogContentBase
+        {
+            var typeSearch = (request.Filters?.Language == null)
+                ? SearchClient.Instance.Search<TEntry>()
+                : SearchClient.Instance.Search<TEntry>(request.Filters?.Language);
+
+            var searchTerm = string.IsNullOrEmpty(request.SearchTerm) ? request.FilterSearchTerm : $"{request.SearchTerm} {request.FilterSearchTerm}";
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var queriedSearch = typeSearch.For(searchTerm);
+
+                if (request.SearchTermFields != null)
+                {
+                    foreach (var current3 in request.SearchTermFields)
+                    {
+                        queriedSearch =
+                            QueryStringSearchExtensions.InField(queriedSearch, current3.Key, current3.Value);
+                    }
+                }
+
+                // TODO: Need to improve to use request.SearchTermFields for XHtmlString field text search
+                //var productQueriedSearch = queriedSearch as IQueriedSearch<ProductContent, QueryStringQuery>;
+                //if (productQueriedSearch != null)
+                //{
+                //    productQueriedSearch = productQueriedSearch
+                //        .InField(x => x.LongDescription, 4);
+                //    queriedSearch = (IQueriedSearch<TEntry, QueryStringQuery>)productQueriedSearch;
+                //}
+
+                queriedSearch = queriedSearch.WithAndAsDefaultOperator();
+                queriedSearch = queriedSearch.UsingSynonyms();
+
+                typeSearch = queriedSearch;
+                typeSearch = typeSearch.ApplyBestBets();
+
+                if (request.UseWildCardSearch)
+                {
+                    foreach (var term in request.SearchTermFields)
+                    {
+                        typeSearch = typeSearch.WildCardQuery(request.SearchTerm, term.Key, term.Value);
+                    }
+                }
+            }
+
+            var productQuerySearch = typeSearch as ITypeSearch<ProductContent>;
+            //if (productQuerySearch != null)
+            //{
+            //    var currentWareHouseCode = request is IProductSearchRequest && !string.IsNullOrEmpty((request as IProductSearchRequest).WarehouseCode) ?
+            //        (request as IProductSearchRequest).WarehouseCode : _warehouseService.GetCurrentWarehouseCode();
+
+            //    var currency = _currencyService.GetCurrentCurrency();
+            //    productQuerySearch = productQuerySearch.Filter(x => x.IsProductAvailability,
+            //        i => i.IsAvailable.Match(true) & i.CurrencyCode.Match(currency.CurrencyCode) & i.WarehouseCode.Match(currentWareHouseCode) & i.Market.Match(request.MarketId));
+
+            //    if (request.ShowOnlyClearance)
+            //    {
+            //        productQuerySearch = productQuerySearch.Filter(x => x.IsProductClearance,
+            //            i => i.IsClearance.Match(true) & i.CurrencyCode.Match(currency.CurrencyCode) & i.Market.Match(request.MarketId));
+            //    }
+
+            //    typeSearch = (ITypeSearch<TEntry>)productQuerySearch;
+            //}
+            //TODO move to config file
+            int FIND_STATICALLY_CACHE_FOR = 15;
+            typeSearch = typeSearch.FilterForVisitor().Filter(request)
+                .FilterByLanguage(request)
+                .SortBy(request)
+                .PagedBy(request)
+                .StaticallyCacheFor(TimeSpan.FromMinutes(FIND_STATICALLY_CACHE_FOR));
+
+            return typeSearch;
         }
 
         public ITypeSearch<TEntry> GeneralSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ContentData
