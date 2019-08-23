@@ -28,7 +28,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.WebPages;
-using Core.Querying.ConcurrentQueue;
 using EPiServer.Personalization.Common;
 using EPiServer.Personalization.Commerce.Tracking;
 
@@ -94,7 +93,6 @@ namespace EPiServer.Reference.Commerce.Site.Infrastructure
 
             // TODO: get max count from web.config
             services.AddSingleton<ITicketProvider>(new SelfDestructingTicketProvider(25, TimeSpan.FromSeconds(1)));
-            services.AddSingleton<ICircuitBreakerPolicyProvider>(new CircuitBreakerPolicyProvider(2, TimeSpan.FromSeconds(1)));
 
             DependencyResolver.SetResolver(new StructureMapDependencyResolver(context.StructureMap()));
             GlobalConfiguration.Configure(config =>

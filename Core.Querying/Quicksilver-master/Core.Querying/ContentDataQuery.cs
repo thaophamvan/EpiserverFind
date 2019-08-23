@@ -17,6 +17,7 @@ using EPiServer.Core;
 using EPiServer.Find;
 using EPiServer.Find.Api.Querying;
 using EPiServer.Find.Cms;
+using EPiServer.Find.Commerce;
 using EPiServer.Find.Framework;
 using EPiServer.Find.Helpers;
 using EPiServer.Find.UnifiedSearch;
@@ -32,18 +33,19 @@ namespace Core.Querying
     /// That is, you can use either the type you specified or any type 
     /// that is more derived.
     /// </typeparam>
-    public class ContentDataQuery<TContentData> : IContentDataQuery<TContentData> where TContentData : IContent
+    public class ContentDataQuery<TContentData> : FilterBase, IContentDataQuery<TContentData> where TContentData : IContent
     {
-        private readonly IClient _searchClient = ContentDataQueryHandler.Instance.Create();
-        public IEnumerable<ContentReference> UnCachedContentReferencesResult()
+        public IEnumerable<ContentReference> UnCachedContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)
         {
-            var results = _searchClient.Search<TContentData>().GetContentResult().Items;
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins).Items;
             return results.Select(i => i.ContentLink);
         }
 
         public IEnumerable<ContentReference> ContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)
         {
-            var results = _searchClient.Search<TContentData>().GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins).Items;
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins).Items;
             return results.Select(i => i.ContentLink);
         }
 
@@ -54,26 +56,29 @@ namespace Core.Querying
 
         public ITypeSearch<TContentData> ChildrenOf(ContentReference parentLink)
         {
-            var results = _searchClient.Search<TContentData>().Filter(p => p.ParentLink.Match(parentLink));
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.Filter(p => p.ParentLink.Match(parentLink));
             return results;
         }
 
         public ITypeSearch<TContentData> IncludeWasteBasket()
         {
-            var results = _searchClient.Search<TContentData>().Filter(p => p.IsDeleted.Match(true));
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.Filter(p => p.IsDeleted.Match(true));
             return results;
         }
 
         public ITypeSearch<TContentData> PublishedIgnoreDates()
         {
-            var results = _searchClient.Search<TContentData>().Filter(p=>(p as IVersionable).IsNotNull().Match(true))
+            var results = FindClient.Search<TContentData>().Filter(p=>(p as IVersionable).IsNotNull().Match(true))
                 .Filter(p => (p as IVersionable).Status.Match(VersionStatus.Published));
             return results;
         }
 
         public ITypeSearch<TContentData> Published()
         {
-            var results = _searchClient.Search<TContentData>().Filter(p => p.IsPublished().Match(true));
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.Filter(p => p.IsPublished().Match(true));
             return results;
         }
 
@@ -82,53 +87,61 @@ namespace Core.Querying
             throw new NotImplementedException();
         }
 
-        public ITypeSearch<TContentData> OfType(params Type[] type)
+        public ITypeSearch<TContentData> OfType(params Type[] types)
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var results = typeSearch.FilterByExactTypes(types);
+            return results;
         }
 
         public ITypeSearch<TContentData> FreeTextSearch(string query)
         {
-            var searchResult = _searchClient.Search<TContentData>()
-                .For(query);
+            var typeSearch = ApplyFilterBaseContent<TContentData>();
+            var searchResult = typeSearch.For(query);
             return searchResult;
         }
 
         public ITypeSearch<TBlock> BlockSearch<TBlock>() where TBlock : BlockData
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TBlock>();
+            return typeSearch;
         }
 
         public ITypeSearch<TPage> PageSearch<TPage>() where TPage : PageData
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TPage>();
+            return typeSearch;
         }
 
-        public ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : NodeContentBase
+        public ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>() where TEntry : NodeContentBase
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TEntry>();
+            return typeSearch;
         }
 
-        public ITypeSearch<TEntry> EntryContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : EntryContentBase
+        public ITypeSearch<TEntry> EntryContentBaseSearch<TEntry>() where TEntry : EntryContentBase
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TEntry>();
+            return typeSearch;
         }
 
-        public ITypeSearch<TEntry> VariantSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : VariationContent
+        public ITypeSearch<TEntry> VariantSearch<TEntry>() where TEntry : VariationContent
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TEntry>();
+            return typeSearch;
         }
 
-        public ITypeSearch<TEntry> ProductSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ProductContent
+        public ITypeSearch<TEntry> ProductSearch<TEntry>() where TEntry : ProductContent
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContentData<TEntry>();
+            return typeSearch;
         }
 
         public ITypeSearch<TEntry> GeneralSearch<TEntry>(ISearchRequest request) where TEntry : CatalogContentBase
         {
             var typeSearch = (request.Filters?.Language == null)
-                ? SearchClient.Instance.Search<TEntry>()
-                : SearchClient.Instance.Search<TEntry>(request.Filters?.Language);
+                ? FindClient.Search<TEntry>()
+                : FindClient.Search<TEntry>(request.Filters?.Language);
 
             var searchTerm = string.IsNullOrEmpty(request.SearchTerm) ? request.FilterSearchTerm : $"{request.SearchTerm} {request.FilterSearchTerm}";
 
@@ -196,11 +209,6 @@ namespace Core.Querying
                 .StaticallyCacheFor(TimeSpan.FromMinutes(FIND_STATICALLY_CACHE_FOR));
 
             return typeSearch;
-        }
-
-        public ITypeSearch<TEntry> GeneralSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ContentData
-        {
-            throw new NotImplementedException();
         }
 
         public ITypeSearch<TEntry> MultiSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : ContentData

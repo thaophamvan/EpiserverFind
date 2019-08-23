@@ -22,7 +22,7 @@ namespace Core.Querying
         /// The query is executed without caching. Use with caution.
         /// </summary>
         /// <returns>ContentReference to the pages that match the query.</returns>
-        IEnumerable<ContentReference> UnCachedContentReferencesResult();
+        IEnumerable<ContentReference> UnCachedContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false);
 
         /// <summary>
         /// Executes the query returning only the ContentReference for each matching page.
@@ -89,14 +89,14 @@ namespace Core.Querying
 
         ITypeSearch<TPage> PageSearch<TPage>() where TPage : PageData;
 
-        ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : NodeContentBase;
+        ITypeSearch<TEntry> NodeContentBaseSearch<TEntry>() where TEntry : NodeContentBase;
 
-        ITypeSearch<TEntry> EntryContentBaseSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request) where TEntry : EntryContentBase;
+        ITypeSearch<TEntry> EntryContentBaseSearch<TEntry>() where TEntry : EntryContentBase;
 
-        ITypeSearch<TEntry> VariantSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request)
+        ITypeSearch<TEntry> VariantSearch<TEntry>()
             where TEntry : VariationContent;
 
-        ITypeSearch<TEntry> ProductSearch<TEntry>(Func<ITypeSearch<TEntry>, ITypeSearch<TEntry>> request)
+        ITypeSearch<TEntry> ProductSearch<TEntry>()
             where TEntry : ProductContent;
 
         ITypeSearch<TEntry> GeneralSearch<TEntry>(ISearchRequest request) where TEntry : CatalogContentBase;

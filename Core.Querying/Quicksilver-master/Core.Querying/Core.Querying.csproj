@@ -300,6 +300,7 @@
     <Compile Include="AutoComplete\IAutoCompleteController.cs" />
     <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
     <Compile Include="ConcurrentQueue\ITicketProvider.cs" />
+    <Compile Include="FilterBase.cs" />
     <Compile Include="ContentDataQuery.cs" />
     <Compile Include="ContentDataQueryFactory.cs" />
     <Compile Include="ContentDataQueryHandler.cs" />
