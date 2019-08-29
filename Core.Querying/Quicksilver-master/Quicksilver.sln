@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiServer.Reference.Commerc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Querying", "Core.Querying\Core.Querying.csproj", "{013B2C3F-26E7-4402-A99D-7EE640858154}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electrolux.DataCache", "Electrolux.DataCache\Electrolux.DataCache.csproj", "{4DA02562-D065-4967-BDA3-C05682021E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electrolux.DataCache.Test", "Electrolux.DataCache.Test\Electrolux.DataCache.Test.csproj", "{17B1AA3D-333F-4D5C-9919-93B74477E17D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{013B2C3F-26E7-4402-A99D-7EE640858154}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{013B2C3F-26E7-4402-A99D-7EE640858154}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{013B2C3F-26E7-4402-A99D-7EE640858154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DA02562-D065-4967-BDA3-C05682021E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DA02562-D065-4967-BDA3-C05682021E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DA02562-D065-4967-BDA3-C05682021E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DA02562-D065-4967-BDA3-C05682021E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B1AA3D-333F-4D5C-9919-93B74477E17D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B1AA3D-333F-4D5C-9919-93B74477E17D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B1AA3D-333F-4D5C-9919-93B74477E17D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B1AA3D-333F-4D5C-9919-93B74477E17D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

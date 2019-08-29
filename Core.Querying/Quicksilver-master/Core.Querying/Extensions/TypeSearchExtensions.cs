@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Core.Querying.ConcurrentQueue;
+using Core.Querying.Infrastructure.ConcurrentQueue;
 using Core.Querying.Models;
 using EPiServer.Core;
 using EPiServer.Find;

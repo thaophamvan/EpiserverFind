@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 4014
 
-namespace Core.Querying.ConcurrentQueue
+namespace Core.Querying.Infrastructure.ConcurrentQueue
 {
     public interface ITicketProvider
     {

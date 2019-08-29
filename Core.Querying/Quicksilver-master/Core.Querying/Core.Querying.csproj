@@ -214,6 +214,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ParallelExtensionsExtras, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSFT.ParallelExtensionsExtras.1.2.0\lib\ParallelExtensionsExtras.dll</HintPath>
+    </Reference>
     <Reference Include="Polly, Version=7.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
       <HintPath>..\packages\Polly.7.1.0\lib\netstandard2.0\Polly.dll</HintPath>
     </Reference>
@@ -299,7 +302,9 @@
     <Compile Include="AutoComplete\ContentReferenceCollectionAutoCompleteControllerBase.cs" />
     <Compile Include="AutoComplete\IAutoCompleteController.cs" />
     <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
-    <Compile Include="ConcurrentQueue\ITicketProvider.cs" />
+    <Compile Include="Infrastructure\ProtectedCall\AsyncCircuitBreaker.cs" />
+    <Compile Include="Infrastructure\ProtectedCall\CircuitBreaker.cs" />
+    <Compile Include="Infrastructure\ConcurrentQueue\ITicketProvider.cs" />
     <Compile Include="FilterBase.cs" />
     <Compile Include="ContentDataQuery.cs" />
     <Compile Include="ContentDataQueryFactory.cs" />
@@ -350,6 +355,8 @@
     <Compile Include="IContentDataQueryHandler.cs" />
     <Compile Include="Infrastructure\Initialization\DependencyResolverInitialization.cs" />
     <Compile Include="Infrastructure\Ioc\ServiceLocatorDependencyResolver.cs" />
+    <Compile Include="Infrastructure\ProtectedCall\ICircuitBreaker.cs" />
+    <Compile Include="Infrastructure\ProtectedCall\IAsyncCircuitBreaker.cs" />
     <Compile Include="ISearchEngine.cs" />
     <Compile Include="Models\ContentCount.cs" />
     <Compile Include="Models\EmptyContentResult.cs" />
@@ -357,6 +364,12 @@
     <Compile Include="Models\ICategorizableContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchEngineType.cs" />
+    <Compile Include="Services\CacheFallbackServices.cs" />
+    <Compile Include="Services\LuceneSearchServices.cs" />
+    <Compile Include="Services\ISearchServices.cs" />
+    <Compile Include="Services\IMultipleSearchProvider.cs" />
+    <Compile Include="Services\EpiserverFindServices.cs" />
+    <Compile Include="Services\MultipleSearchProvider.cs" />
     <Compile Include="Shared\FindConstants.cs" />
     <Compile Include="Shared\FindEnums.cs" />
     <Compile Include="Shared\StringConstants.cs" />

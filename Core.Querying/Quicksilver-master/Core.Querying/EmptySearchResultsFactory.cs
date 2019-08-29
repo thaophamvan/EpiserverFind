@@ -16,6 +16,7 @@ namespace Core.Querying
             return new SearchResult<T>()
             {
                 Facets = new FacetResults(),
+
                 Hits = new HitCollection<T>
                 {
                     Hits = Enumerable.Empty<SearchHit<T>>().ToList(),
