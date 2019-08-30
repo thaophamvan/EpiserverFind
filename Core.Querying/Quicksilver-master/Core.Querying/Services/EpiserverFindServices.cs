@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Querying.Extensions;
+﻿using Core.Querying.Extensions;
 using Core.Querying.Find.Extensions;
 using Core.Querying.Find.Extensions.FilterBuilders;
 using Core.Querying.Find.Extensions.QueryBuilders;
@@ -12,7 +6,7 @@ using Core.Querying.Find.Extensions.SortBuilders;
 using Core.Querying.Find.Helpers;
 using Core.Querying.Find.Models.Request;
 using Core.Querying.Find.Models.Response;
-using EPiServer.Commerce.Catalog.ContentTypes;
+using Core.Querying.Infrastructure.Configuration;
 using EPiServer.Core;
 using EPiServer.Find;
 using EPiServer.Find.Cms;
@@ -61,7 +55,7 @@ namespace Core.Querying.Services
                 .FilterByLanguage(request)
                 .SortBy(request)
                 .PagedBy(request);
-            var result = typeSearch.GetContentResultSafe();
+            var result = typeSearch.GetContentResultSafe(SiteSettings.Instance.FindCacheTimeOutMinutes);
 
             return new SearchResponse<TEntry>
             {

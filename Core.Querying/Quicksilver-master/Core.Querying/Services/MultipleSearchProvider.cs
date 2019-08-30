@@ -3,6 +3,7 @@ using System.Reflection;
 using Core.Querying.Extensions;
 using Core.Querying.Find.Models.Request;
 using Core.Querying.Find.Models.Response;
+using Core.Querying.Infrastructure.Configuration;
 using Core.Querying.Infrastructure.ProtectedCall;
 using Core.Querying.Shared;
 using EPiServer.Core;
@@ -34,7 +35,7 @@ namespace Core.Querying.Services
                     return searchResult;
                 },
                 default(SearchResponse<TEntry>),
-                TimeSpan.FromSeconds(30),
+                TimeSpan.FromMilliseconds(SiteSettings.Instance.ExecuteAndCacheTimeOutMilliseconds),
                 "search");
             return result;
         }
