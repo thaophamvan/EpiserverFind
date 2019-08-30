@@ -302,6 +302,7 @@
     <Compile Include="AutoComplete\ContentReferenceCollectionAutoCompleteControllerBase.cs" />
     <Compile Include="AutoComplete\IAutoCompleteController.cs" />
     <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
+    <Compile Include="Infrastructure\Configuration.cs" />
     <Compile Include="Infrastructure\ProtectedCall\AsyncCircuitBreaker.cs" />
     <Compile Include="Infrastructure\ProtectedCall\CircuitBreaker.cs" />
     <Compile Include="Infrastructure\ConcurrentQueue\ITicketProvider.cs" />
@@ -364,14 +365,18 @@
     <Compile Include="Models\ICategorizableContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchEngineType.cs" />
-    <Compile Include="Services\CacheFallbackServices.cs" />
+    <Compile Include="Services\CacheSearchServices.cs" />
+    <Compile Include="Services\DatabaseSearchServices.cs" />
     <Compile Include="Services\LuceneSearchServices.cs" />
     <Compile Include="Services\ISearchServices.cs" />
     <Compile Include="Services\IMultipleSearchProvider.cs" />
     <Compile Include="Services\EpiserverFindServices.cs" />
     <Compile Include="Services\MultipleSearchProvider.cs" />
+    <Compile Include="Services\ServicesBase.cs" />
+    <Compile Include="Extensions\CacheExtension.cs" />
     <Compile Include="Shared\FindConstants.cs" />
     <Compile Include="Shared\FindEnums.cs" />
+    <Compile Include="Shared\ServiceEnum.cs" />
     <Compile Include="Shared\StringConstants.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
@@ -380,7 +385,12 @@
     <None Include="modules\_protected\EPiCode.InspectInIndex\EPiCode.InspectInIndex.zip" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Electrolux.DataCache\Electrolux.DataCache.csproj">
+      <Project>{4da02562-d065-4967-bda3-c05682021e54}</Project>
+      <Name>Electrolux.DataCache</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Task.txt" />
   </ItemGroup>

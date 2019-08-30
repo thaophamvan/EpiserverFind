@@ -8,12 +8,12 @@ namespace Core.Querying.Find.Helpers
 {
     public static class PropertyInfoHelper
     {
-        public static PropertyInfo GetPropertyByName<T>(string name) where T : IContent
+        public static PropertyInfo GetPropertyByName<T>(string name) where T : IContentData
         {
             return typeof(T).GetProperties().FirstOrDefault(p => p.Name == name);
         }
 
-        public static dynamic GetLamdaExpression<T>(string name) where T : IContent
+        public static dynamic GetLamdaExpression<T>(string name) where T : IContentData
         {
             var propertyInfo = GetPropertyByName<T>(name);
             if (propertyInfo == null)
@@ -23,7 +23,7 @@ namespace Core.Querying.Find.Helpers
             return propertyInfo.GetLamdaExpression<T>();
         }
 
-        public static dynamic GetLamdaExpression<T, TProp>(string name) where T : IContent
+        public static dynamic GetLamdaExpression<T, TProp>(string name) where T : IContentData
         {
             var propertyInfo = GetPropertyByName<T>(name);
             var expression = propertyInfo.GetLamdaExpression<T>();
@@ -37,7 +37,7 @@ namespace Core.Querying.Find.Helpers
                  (converted, expression.Parameters);
         }
 
-        private static dynamic GetLamdaExpression<T>(this PropertyInfo propertyInfo) where T : IContent
+        private static dynamic GetLamdaExpression<T>(this PropertyInfo propertyInfo) where T : IContentData
         {
             ParameterExpression expParam = Expression.Parameter(typeof(T), "x");
             MemberExpression expProp = Expression.Property(expParam, propertyInfo);

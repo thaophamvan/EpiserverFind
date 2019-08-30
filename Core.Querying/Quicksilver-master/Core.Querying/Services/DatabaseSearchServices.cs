@@ -12,7 +12,7 @@ using EPiServer.Find;
 
 namespace Core.Querying.Services
 {
-    public class LuceneSearchServices : ISearchServices
+    public class DatabaseSearchServices : ISearchServices
     {
         public SearchResponse<TEntry> GenericSearch<TEntry>(ISearchRequest request) where TEntry : IContent
         {

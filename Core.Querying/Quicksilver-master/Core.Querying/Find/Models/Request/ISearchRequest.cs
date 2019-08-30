@@ -14,7 +14,6 @@ namespace Core.Querying.Find.Models.Request
 
         IList<KeyValuePair<string, double?>> SearchTermFields { get; }
 
-        bool ShowOnlyClearance { get; set; }
     }
 
     public interface ISortRequest
