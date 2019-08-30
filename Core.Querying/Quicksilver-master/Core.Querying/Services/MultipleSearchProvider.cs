@@ -1,29 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.Querying.Extensions;
 using Core.Querying.Find.Models.Request;
 using Core.Querying.Find.Models.Response;
 using Core.Querying.Infrastructure.ProtectedCall;
 using Core.Querying.Shared;
-using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
-using EPiServer.Find;
 
 namespace Core.Querying.Services
 {
     public class MultipleSearchProvider : ServicesBase, IMultipleSearchProvider
     {
-        private readonly ICircuitBreaker _circruiBreaker = EPiServer.ServiceLocation.ServiceLocator.Current.GetInstance<ICircuitBreaker>();
+        private readonly ICircuitBreaker _circruiBreaker;
+        private readonly Func<ServiceEnum, ISearchServices> _searchServices;
 
-        private readonly Func<string, ISearchServices> _searchServices;
-        public MultipleSearchProvider(Func<string, ISearchServices> searchServices)
+        public MultipleSearchProvider(Func<ServiceEnum, ISearchServices> searchServices, ICircuitBreaker circruiBreaker)
         {
-            this._searchServices = searchServices;
+            _searchServices = searchServices;
+            _circruiBreaker = circruiBreaker;
         }
         public SearchResponse<TEntry> GenericSearch<TEntry>(ISearchRequest request) where TEntry : IContent
         {
@@ -34,8 +28,8 @@ namespace Core.Querying.Services
                 () =>
                 {
                     var searchResult = _circruiBreaker.Execute(
-                        () => _searchServices(ServiceEnum.Find.ToString()).GenericSearch<TEntry>(request),
-                        () => _searchServices(ServiceEnum.Cache.ToString()).GenericSearch<TEntry>(request)
+                        () => _searchServices(ServiceEnum.Find).GenericSearch<TEntry>(request),
+                        () => _searchServices(ServiceEnum.Cache).GenericSearch<TEntry>(request)
                         );
                     return searchResult;
                 },
