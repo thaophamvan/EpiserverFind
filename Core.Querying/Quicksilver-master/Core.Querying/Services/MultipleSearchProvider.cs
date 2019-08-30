@@ -20,7 +20,8 @@ namespace Core.Querying.Services
             _searchServices = searchServices;
             _circruiBreaker = circruiBreaker;
         }
-        public SearchResponse<TEntry> GenericSearch<TEntry>(ISearchRequest request) where TEntry : IContent
+
+        public SearchResponse<T> GenericSearch<T>(ISearchRequest request) where T : IContent
         {
             var cacheKey = request.GetCacheKey();
 
@@ -29,12 +30,12 @@ namespace Core.Querying.Services
                 () =>
                 {
                     var searchResult = _circruiBreaker.Execute(
-                        () => _searchServices(ServiceEnum.Find).GenericSearch<TEntry>(request),
-                        () => _searchServices(ServiceEnum.Cache).GenericSearch<TEntry>(request)
+                        () => _searchServices(ServiceEnum.Find).GenericSearch<T>(request),
+                        () => _searchServices(ServiceEnum.Cache).GenericSearch<T>(request)
                         );
                     return searchResult;
                 },
-                default(SearchResponse<TEntry>),
+                EmptySearchResultsFactory.CreateSearchResponse<T>(),
                 TimeSpan.FromMilliseconds(SiteSettings.Instance.ExecuteAndCacheTimeOutMilliseconds),
                 "search");
             return result;

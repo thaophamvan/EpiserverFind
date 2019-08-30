@@ -352,7 +352,6 @@
     <Compile Include="Find\Models\Response\SearchResponse.cs" />
     <Compile Include="Find\SearchRequests\ProductSearchRequest.cs" />
     <Compile Include="Find\Services\IndexService.cs" />
-    <Compile Include="Find\Services\SearchService.cs" />
     <Compile Include="IContentDataQuery.cs" />
     <Compile Include="IContentDataQueryFactory.cs" />
     <Compile Include="IContentDataQueryHandler.cs" />

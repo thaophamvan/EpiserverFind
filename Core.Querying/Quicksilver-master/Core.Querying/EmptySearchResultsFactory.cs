@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Core.Querying.Find.Models.Response;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 
@@ -23,6 +25,15 @@ namespace Core.Querying
                     Total = 0
                 },
                 Shards = new Shards()
+            };
+        }
+
+        public static SearchResponse<T> CreateSearchResponse<T>()
+        {
+            return new SearchResponse<T>()
+            {
+                Facets = new List<FacetGroup>(),
+                Items = new PagedList<T>(Enumerable.Empty<T>(), 0,0,0)
             };
         }
     }
