@@ -54,7 +54,7 @@ namespace Core.Querying.Services
         /// <returns>SearchResponse.</returns>
         SearchResponse<TContent> OfType(params Type[] types);
 
-        SearchResponse<TContent> FreeTextSearch(string query);
+        SearchResponse<TContent> FreeTextSearch(string query, int maxItemNumber);
 
         SearchResponse<TContent> MultiSearch(Func<ITypeSearch<TContent>, ITypeSearch<TContent>> request);
 

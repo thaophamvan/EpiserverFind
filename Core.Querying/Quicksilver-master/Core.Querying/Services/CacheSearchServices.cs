@@ -55,7 +55,7 @@ namespace Core.Querying.Services
             throw new NotImplementedException();
         }
 
-        public SearchResponse<TContent> FreeTextSearch(string query)
+        public SearchResponse<TContent> FreeTextSearch(string query, int maxItemNumber)
         {
             throw new NotImplementedException();
         }

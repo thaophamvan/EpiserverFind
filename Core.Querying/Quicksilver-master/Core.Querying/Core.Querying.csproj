@@ -298,10 +298,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoComplete\AutoCompleteItem.cs" />
-    <Compile Include="AutoComplete\ContentReferenceCollectionAutoCompleteControllerBase.cs" />
-    <Compile Include="AutoComplete\IAutoCompleteController.cs" />
-    <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
     <Compile Include="Find\Models\Response\SearchResponse.cs" />
     <Compile Include="Infrastructure\Configuration\ISiteSettingsProvider.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettings.cs" />

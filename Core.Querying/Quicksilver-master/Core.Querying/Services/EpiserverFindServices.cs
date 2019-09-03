@@ -129,16 +129,16 @@ namespace Core.Querying.Services
             };
         }
 
-        public SearchResponse<TContent> FreeTextSearch(string query)
+        public SearchResponse<TContent> FreeTextSearch(string query, int maxItemNumber)
         {
-            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var typeSearch = ApplyFilterBaseContent<TContent>().Take(maxItemNumber);
             var results = typeSearch.For(query).GetContentResultSafe();
+
             return new SearchResponse<TContent>
             {
                 Items = results.ToPagedList()
             };
         }
-
       
         public SearchResponse<TContent> MultiSearch(Func<ITypeSearch<TContent>, ITypeSearch<TContent>> request)
         {
