@@ -16,14 +16,6 @@ namespace Core.Querying
 {
     public interface IContentDataQuery<TContentData> where TContentData : IContent
     {
-
-        /// <summary>
-        /// Executes the query returning only the ContentReference for each matching page.
-        /// The query is executed without caching. Use with caution.
-        /// </summary>
-        /// <returns>ContentReference to the pages that match the query.</returns>
-        IEnumerable<ContentReference> UnCachedContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false);
-
         /// <summary>
         /// Executes the query returning only the ContentReference for each matching page.
         /// The result is either fetched from cache or added to cache

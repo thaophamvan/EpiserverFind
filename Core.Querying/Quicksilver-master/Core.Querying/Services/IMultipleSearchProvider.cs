@@ -9,6 +9,6 @@ namespace Core.Querying.Services
 {
     public interface IMultipleSearchProvider
     {
-        SearchResponse<TEntry> GenericSearch<TEntry>(ISearchRequest request) where TEntry : IContent;
+        SearchResponse<TContent> GenericSearch<TContent>(ISearchRequest request) where TContent : IContent;
     }
 }
