@@ -302,6 +302,7 @@
     <Compile Include="AutoComplete\ContentReferenceCollectionAutoCompleteControllerBase.cs" />
     <Compile Include="AutoComplete\IAutoCompleteController.cs" />
     <Compile Include="AutoComplete\IAutoCompleteHandlerController.cs" />
+    <Compile Include="Find\Models\Response\SearchResponse.cs" />
     <Compile Include="Infrastructure\Configuration\ISiteSettingsProvider.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettings.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettingsProvider.cs" />
@@ -309,7 +310,6 @@
     <Compile Include="Infrastructure\ProtectedCall\CircuitBreaker.cs" />
     <Compile Include="Infrastructure\ConcurrentQueue\ITicketProvider.cs" />
     <Compile Include="FilterBase.cs" />
-    <Compile Include="ContentDataQuery.cs" />
     <Compile Include="ContentDataQueryFactory.cs" />
     <Compile Include="ContentDataQueryHandler.cs" />
     <Compile Include="Employee.cs" />
@@ -349,10 +349,8 @@
     <Compile Include="Find\Models\Response\FacetGroup.cs" />
     <Compile Include="Find\Models\Response\IPagedList.cs" />
     <Compile Include="Find\Models\Response\PagedList.cs" />
-    <Compile Include="Find\Models\Response\SearchResponse.cs" />
     <Compile Include="Find\SearchRequests\ProductSearchRequest.cs" />
     <Compile Include="Find\Services\IndexService.cs" />
-    <Compile Include="IContentDataQuery.cs" />
     <Compile Include="IContentDataQueryFactory.cs" />
     <Compile Include="IContentDataQueryHandler.cs" />
     <Compile Include="Infrastructure\Initialization\DependencyResolverInitialization.cs" />
@@ -364,6 +362,7 @@
     <Compile Include="Models\EmptyContentResult.cs" />
     <Compile Include="Models\EmptyUnifiedSearchResults.cs" />
     <Compile Include="Models\ICategorizableContent.cs" />
+    <Compile Include="Models\ContentSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchEngineType.cs" />
     <Compile Include="Services\CacheSearchServices.cs" />

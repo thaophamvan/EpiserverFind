@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Querying.Extensions;
 using Core.Querying.Find.Extensions;
 using Core.Querying.Find.Extensions.FilterBuilders;
@@ -9,10 +10,10 @@ using Core.Querying.Find.Helpers;
 using Core.Querying.Find.Models.Request;
 using Core.Querying.Find.Models.Response;
 using Core.Querying.Infrastructure.Configuration;
-using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
 using EPiServer.Find;
 using EPiServer.Find.Cms;
+using EPiServer.Find.Helpers;
 
 namespace Core.Querying.Services
 {
@@ -69,7 +70,9 @@ namespace Core.Querying.Services
 
         public IEnumerable<ContentReference> ContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var results = typeSearch.GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins).Items;
+            return results.Select(i => i.ContentLink);
         }
 
         public SearchResponse<TContent> FilterBySiteId(string siteId)
@@ -79,69 +82,64 @@ namespace Core.Querying.Services
 
         public SearchResponse<TContent> ChildrenOf(ContentReference parentLink)
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var results = typeSearch.Filter(p => p.ParentLink.Match(parentLink)).GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
         public SearchResponse<TContent> IncludeWasteBasket()
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var results = typeSearch.Filter(p => p.IsDeleted.Match(true)).GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
         public SearchResponse<TContent> PublishedIgnoreDates()
         {
-            throw new NotImplementedException();
+            var results = FindClient.Search<TContent>().Filter(p => (p as IVersionable).IsNotNull().Match(true))
+                .Filter(p => (p as IVersionable).Status.Match(VersionStatus.Published)).GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
         public SearchResponse<TContent> Published()
         {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> InRemoteSite(string remoteSite)
-        {
-            throw new NotImplementedException();
+            var results = ApplyFilterBaseContent<TContent>().GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
         public SearchResponse<TContent> OfType(params Type[] types)
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var results = typeSearch.FilterByExactTypes(types).GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
         public SearchResponse<TContent> FreeTextSearch(string query)
         {
-            throw new NotImplementedException();
+            var typeSearch = ApplyFilterBaseContent<TContent>();
+            var results = typeSearch.For(query).GetContentResultSafe();
+            return new SearchResponse<TContent>
+            {
+                Items = results.ToPagedList()
+            };
         }
 
-        public SearchResponse<TContent> BlockSearch<T>() where T : BlockData
-        {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> PageSearch<T>() where T : PageData
-        {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> NodeContentBaseSearch<T>() where T : NodeContentBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> EntryContentBaseSearch<T>() where T : EntryContentBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> VariantSearch<T>() where T : VariationContent
-        {
-            throw new NotImplementedException();
-        }
-
-        public SearchResponse<TContent> ProductSearch<T>() where T : ProductContent
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public SearchResponse<TContent> MultiSearch(Func<ITypeSearch<TContent>, ITypeSearch<TContent>> request)
         {
             throw new NotImplementedException();

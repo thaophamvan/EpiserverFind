@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 
 namespace Core.Querying.Infrastructure.Configuration
 {    
@@ -25,6 +26,21 @@ namespace Core.Querying.Infrastructure.Configuration
         public int FindCacheTimeOutMinutes
         {
             get { return GetSetting("FindCacheTimeOut", 5); }
+        }
+
+        public int ExceptionsAllowedBeforeBreaking
+        {
+            get { return GetSetting("ExceptionsAllowedBeforeBreaking", 3); }
+        }
+
+        public int RetryCount
+        {
+            get { return GetSetting("RetryCount", 3); }
+        }
+
+        public int SleepDurationsMilliseconds
+        {
+            get { return GetSetting("SleepDurationsMilliseconds", 1000); }
         }
 
         public bool CacheEnabled

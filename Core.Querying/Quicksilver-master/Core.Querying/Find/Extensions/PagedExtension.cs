@@ -10,5 +10,10 @@ namespace Core.Querying.Find.Extensions
         {
             return new PagedList<T>(subSet, request.PageNumber, request.PageSize, totalItemCount);
         }
+
+        public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> subSet)
+        {
+            return new PagedList<T>(subSet);
+        }
     }
 }

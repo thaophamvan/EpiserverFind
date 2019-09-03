@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Querying.Infrastructure.Configuration;
 using EPiServer.Logging;
 using Polly;
 using Polly.CircuitBreaker;
@@ -13,21 +14,21 @@ namespace Core.Querying.Infrastructure.ProtectedCall
         private readonly ILogger _log = LogManager.GetLogger(typeof(CircuitBreaker));
         public T Execute<T>(Func<T> operation, Func<T> openStateOperation)
         {
-            // Define our waitAndRetry policy: keep retrying with 1000ms gaps.
+            // Define our waitAndRetry policy: keep retrying with n ms gaps.
             RetryPolicy waitAndRetryPolicy = Policy
                 .Handle<Exception>(e => !(e is BrokenCircuitException)) // Exception filtering!  We don't retry if the inner circuit-breaker judges the underlying system is out of commission!
                 .WaitAndRetryForever(
-                    attempt => TimeSpan.FromMilliseconds(1000),
+                    attempt => TimeSpan.FromMilliseconds(SiteSettings.Instance.SleepDurationsMilliseconds),
                     (exception, calculatedWaitDuration) =>
                     {
                         _log.Error(".Log, then retry: ", exception);
                     });
 
-            // Define our CircuitBreaker policy: Break if the action fails 3 times in a row.
+            // Define our CircuitBreaker policy: Break if the action fails n times in a row.
             CircuitBreakerPolicy circuitBreakerPolicy = Policy
                 .Handle<Exception>()
                 .CircuitBreaker(
-                    exceptionsAllowedBeforeBreaking: 3,
+                    exceptionsAllowedBeforeBreaking: SiteSettings.Instance.ExceptionsAllowedBeforeBreaking,
                     durationOfBreak: TimeSpan.FromSeconds(1),
                     onBreak: (ex, breakDelay) =>
                     {

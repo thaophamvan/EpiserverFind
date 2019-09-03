@@ -11,7 +11,7 @@ namespace Core.Querying.Services
     public interface ISearchServices<TContent> where TContent : IContent
     {
         SearchResponse<TContent> GenericSearch(ISearchRequest request);
-
+        
         /// <summary>
         /// Executes the query returning only the ContentReference for each matching page.
         /// The result is either fetched from cache or added to cache
@@ -48,15 +48,6 @@ namespace Core.Querying.Services
         SearchResponse<TContent> Published();
 
         /// <summary>
-        /// Applies additional filtering: only pages in specified remote site.
-        /// </summary>
-        /// <param name="remoteSite">
-        /// The remote Site.
-        /// </param>
-        /// <returns>SearchResponse</returns>
-        SearchResponse<TContent> InRemoteSite(string remoteSite);
-
-        /// <summary>
         /// Find ContentData with specified types.
         /// </summary>
         /// <param name="types">List of types to find.</param>
@@ -64,20 +55,6 @@ namespace Core.Querying.Services
         SearchResponse<TContent> OfType(params Type[] types);
 
         SearchResponse<TContent> FreeTextSearch(string query);
-
-        SearchResponse<TContent> BlockSearch<T>() where T : BlockData;
-
-        SearchResponse<TContent> PageSearch<T>() where T : PageData;
-
-        SearchResponse<TContent> NodeContentBaseSearch<T>() where T : NodeContentBase;
-
-        SearchResponse<TContent> EntryContentBaseSearch<T>() where T : EntryContentBase;
-
-        SearchResponse<TContent> VariantSearch<T>()
-            where T : VariationContent;
-
-        SearchResponse<TContent> ProductSearch<T>()
-            where T : ProductContent;
 
         SearchResponse<TContent> MultiSearch(Func<ITypeSearch<TContent>, ITypeSearch<TContent>> request);
 

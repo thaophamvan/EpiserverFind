@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Querying.Find.Models.Response
 {
@@ -34,6 +35,13 @@ namespace Core.Querying.Find.Models.Response
 
             // add items to internal list
             if (subset != null && TotalItemCount > 0)
+                Subset.AddRange(subset);
+        }
+
+        public PagedList(IEnumerable<T> subset)
+        {
+            // add items to internal list
+            if (subset != null && subset.Any())
                 Subset.AddRange(subset);
         }
 
