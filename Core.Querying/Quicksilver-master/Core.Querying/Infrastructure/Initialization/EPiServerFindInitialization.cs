@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using Core.Querying.Find.Interfaces;
 using EPiServer;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
@@ -38,28 +39,25 @@ namespace Core.Querying.Infrastructure.Initialization
         /// </remarks>
         public void Initialize(InitializationEngine context)
         {
-            //var logService = ServiceLocator.Current.GetInstance<ILoggService>();
-            //// Exclude all from indexing
+            // Exclude all from indexing
             //ContentIndexer.Instance.Conventions.ForInstancesOf<IContent>().ShouldIndex(x => false);
 
-            //// Include all pages
-            //ContentIndexer.Instance.Conventions.ForInstancesOf<ICanBeSearched>().ShouldIndex(ShouldIndexSitePageData);
+            // Include all pages
+            ContentIndexer.Instance.Conventions.ForInstancesOf<ICanBeSearched>().ShouldIndex(ShouldIndexSitePageData);
 
-            ////Include blocks
-            //ContentIndexer.Instance.Conventions.ForInstancesOf<BaseBlockData>().ShouldIndex(m => true);
+            //Include blocks
+            ContentIndexer.Instance.Conventions.ForInstancesOf<BlockData>().ShouldIndex(m => true);
 
-            ////Include images
+            //Include images
             //ContentIndexer.Instance.Conventions.ForInstancesOf<ImageFile>().ShouldIndex(m => true);
 
-            //// Include all catalog items
-            //ContentIndexer.Instance.Conventions.ForInstancesOf<CatalogContentBase>().ShouldIndex(ShouldIndexCatalogData);
+            // Include all catalog items
+            ContentIndexer.Instance.Conventions.ForInstancesOf<CatalogContentBase>().ShouldIndex(ShouldIndexCatalogData);
 
-            ////index all colour swatch blocks
-            //ContentIndexer.Instance.Conventions.ForInstancesOf<ColourSwatchBlock>().ShouldIndex(x => true);
-
+            
             //try
             //{
-            //    SearchClient.Instance.Conventions.NestedConventions.ForInstancesOf<BaseProduct>().Add(p => p.IsProductAvailability);
+            //    SearchClient.Instance.Conventions.NestedConventions.ForInstancesOf<Produc>().Add(p => p.IsProductAvailability);
             //    SearchClient.Instance.Conventions.NestedConventions.ForInstancesOf<BaseProduct>().Add(p => p.Prices);
             //    SearchClient.Instance.Conventions.NestedConventions.ForInstancesOf<BaseVariation>().Add(p => p.Prices);
             //    SearchClient.Instance.Conventions.NestedConventions.ForInstancesOf<BaseProduct>().Add(p => p.IsProductClearance);
@@ -82,12 +80,10 @@ namespace Core.Querying.Infrastructure.Initialization
 
             //        sb.AppendLine();
             //    }
-
-            //    logService.Logg(EPiServer.Logging.Level.Critical, Constants.LOG_PROCESS_EPI_FIND_INIT, new NullReferenceException(sb.ToString()));
             //}
             //catch (Exception ex)
             //{
-            //    logService.Logg(EPiServer.Logging.Level.Critical, Constants.LOG_PROCESS_EPI_FIND_INIT, ex);
+
             //}
 
             AddVariationEvent();
@@ -117,24 +113,24 @@ namespace Core.Querying.Infrastructure.Initialization
         /// </summary>
         /// <param name="page">The page.</param>
         /// <returns>True/False depending on if the page should be indexed or not.</returns>
-        //private bool ShouldIndexSitePageData(ICanBeSearched item)
-        //{
-        //    var page = item as PageData;
+        private bool ShouldIndexSitePageData(ICanBeSearched item)
+        {
+            var page = item as PageData;
 
-        //    if (page == null) return false;
+            if (page == null) return false;
 
-        //    // Check if the page is published
-        //    var shouldIndex = page.CheckPublishedStatus(PagePublishedStatus.Published) && !page.IsDeleted;
+            // Check if the page is published
+            var shouldIndex = page.CheckPublishedStatus(PagePublishedStatus.Published) && !page.IsDeleted;
 
-        //    // If the page should not be indexed, try to delete it if it exists in the index
-        //    if (!shouldIndex)
-        //    {
-        //        IEnumerable<DeleteResult> result;
-        //        ContentIndexer.Instance.TryDelete(page, out result);
-        //    }
+            // If the page should not be indexed, try to delete it if it exists in the index
+            if (!shouldIndex)
+            {
+                IEnumerable<DeleteResult> result;
+                ContentIndexer.Instance.TryDelete(page, out result);
+            }
 
-        //    return shouldIndex;
-        //}
+            return shouldIndex;
+        }
 
         /// <summary>
         /// Determine if the catalog item should be indexed.

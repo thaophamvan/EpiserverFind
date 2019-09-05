@@ -298,10 +298,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Find\Interfaces\ICanBeSearched.cs" />
     <Compile Include="Find\Models\Response\SearchResponse.cs" />
     <Compile Include="Infrastructure\Configuration\ISiteSettingsProvider.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettings.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettingsProvider.cs" />
+    <Compile Include="Infrastructure\Initialization\EPiServerFindInitialization.cs" />
     <Compile Include="Infrastructure\ProtectedCall\AsyncCircuitBreaker.cs" />
     <Compile Include="Infrastructure\ProtectedCall\CircuitBreaker.cs" />
     <Compile Include="Infrastructure\ConcurrentQueue\ITicketProvider.cs" />

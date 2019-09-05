@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Querying.Extensions;
 using Core.Querying.Find.Extensions;
+using Core.Querying.Find.Extensions.FacetBuilders;
 using Core.Querying.Find.Extensions.FilterBuilders;
 using Core.Querying.Find.Extensions.QueryBuilders;
 using Core.Querying.Find.Extensions.SortBuilders;
 using Core.Querying.Find.Helpers;
 using Core.Querying.Find.Models.Request;
 using Core.Querying.Find.Models.Response;
+using Core.Querying.Find.SearchRequests;
 using Core.Querying.Infrastructure.Configuration;
 using EPiServer.Core;
 using EPiServer.Find;
@@ -19,7 +21,7 @@ namespace Core.Querying.Services
 {
     public class EpiserverFindServices<TContent> : FilterBase, ISearchServices<TContent> where TContent : IContent
     {
-        public SearchResponse<TContent> GenericSearch(ISearchRequest request)
+        private ITypeSearch<TContent> CreateBaseContentSearch(ISearchRequest request)
         {
             var typeSearch = (request.Filters?.Language == null)
                 ? FindClient.Search<TContent>()
@@ -59,12 +61,17 @@ namespace Core.Querying.Services
                 .FilterByLanguage(request)
                 .SortBy(request)
                 .PagedBy(request);
-            var result = typeSearch.GetContentResultSafe(SiteSettings.Instance.FindCacheTimeOutMinutes);
+            return typeSearch;
+        }
+        public SearchResponse<TContent> GenericSearch(ISearchRequest request)
+        {
+            var typeSearch = CreateBaseContentSearch(request).AddFacetFor(request as IProductSearchRequest);
+            var results = typeSearch.GetContentResultSafe(SiteSettings.Instance.FindCacheTimeOutMinutes);
 
             return new SearchResponse<TContent>
             {
-                Items = result.ToPagedList(request, result.TotalMatching),
-                Facets = result.ExtractFacet(request.Facets)
+                Items = results.ToPagedList(request, results.TotalMatching),
+                Facets = results.ExtractFacet(request.Facets)
             };
         }
 

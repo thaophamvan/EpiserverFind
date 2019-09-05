@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using EPiServer.Find;
+using EPiServer.Find.Api.Facets;
 
 namespace Core.Querying.Find.Models.Request
 {
@@ -52,19 +53,19 @@ namespace Core.Querying.Find.Models.Request
 
     public class InRangeFilterItem: FilterItem
     {
-        public IList<RangeItem> Values { get; set; }
-        public InRangeFilterItem(string field, IList<RangeItem> values)
+        public IList<NumericRange> Values { get; set; }
+        public InRangeFilterItem(string field, IList<NumericRange> values)
         {
             Field = field;
             Values = values;
         }
     }
 
-    public class RangeItem
-    {
-        public double From { get; set; }
-        public double To { get; set; }
-    }
+    //public class RangeItem
+    //{
+    //    public double From { get; set; }
+    //    public double To { get; set; }
+    //}
 
 
     public class NotMatchFilterItem : MatchFilterItem

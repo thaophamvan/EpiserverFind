@@ -2,10 +2,8 @@
 
 namespace Core.Querying.Find.Models.Request
 {
-    public interface ISearchRequest : IFilterRequest, ISortRequest, IFacetRequest, IPagedRequest
+    public interface ISearchRequest : IFilterRequest, ISortRequest, IFacetRequest, IPagedRequest, IMarketRequest
     {
-        string MarketId { get; }
-
         bool UseWildCardSearch { get; }
 
         string SearchTerm { get; }
@@ -14,6 +12,11 @@ namespace Core.Querying.Find.Models.Request
 
         IList<KeyValuePair<string, double?>> SearchTermFields { get; }
 
+    }
+
+    public interface IMarketRequest
+    {
+        string MarketId { get; }
     }
 
     public interface ISortRequest

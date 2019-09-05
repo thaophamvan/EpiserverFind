@@ -30,7 +30,7 @@ namespace Core.Querying.Find.Extensions.FacetBuilders
                         .RangeNumericFacetFor(request.Facets.Items.Where(f => f.GetType() == typeof(NumericFacetItem)).OfType<NumericFacetItem>());
         }
 
-        public static ITypeSearch<T> AddFacetFor<T>(this ITypeSearch<T> query, IProductSearchRequest request) where T : ProductContent
+        public static ITypeSearch<T> AddFacetFor<T>(this ITypeSearch<T> query, IProductSearchRequest request) where T : IContent
         {
             if (request?.Facets?.Items == null) return query;
 
@@ -43,7 +43,7 @@ namespace Core.Querying.Find.Extensions.FacetBuilders
                         var lambaExpression = PropertyInfoHelper.GetLamdaExpression<T>(facet.Field);
                         if (lambaExpression != null)
                         {
-                            query = TypeSearchExtensions.TermsFacetFor(query, lambaExpression, (Action<TermsFacetRequest>)(f => f.Size = 100));
+                            query = TypeSearchExtensions.TermsFacetFor(query, lambaExpression);
                         }
                         else
                         {
@@ -65,8 +65,8 @@ namespace Core.Querying.Find.Extensions.FacetBuilders
                         //{
                         //    var currencyCode = ServiceLocator.Current.GetInstance<ICurrencyService>().GetCurrentCurrency().CurrencyCode;
                         //    productQuery = productQuery.HistogramFacetFor(
-                        //        p => p.Prices, pp => pp.Price, 
-                        //        request.PriceInterval, 
+                        //        p => p.Prices, pp => pp.Price,
+                        //        request.PriceInterval,
                         //        pp => pp.MarketId.Match(request.MarketId) & pp.CurrencyCode.Match(currencyCode));
                         //    query = (ITypeSearch<T>)productQuery;
                         //}
@@ -94,7 +94,7 @@ namespace Core.Querying.Find.Extensions.FacetBuilders
             return query;
         }
 
-        public static ITypeSearch<T> AddFacetForVariation<T>(this ITypeSearch<T> query, IProductSearchRequest request) where T : VariationContent
+        public static ITypeSearch<T> AddFacetForVariation<T>(this ITypeSearch<T> query, IProductSearchRequest request) where T : IContent
         {
             if (request?.Facets?.Items == null) return query;
 

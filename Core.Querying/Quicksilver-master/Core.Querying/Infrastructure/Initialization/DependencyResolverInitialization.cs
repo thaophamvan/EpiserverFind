@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Core.Querying.Find.FacetRegistry;
 using Core.Querying.Infrastructure.Ioc;
 using Core.Querying.Infrastructure.ProtectedCall;
 using Core.Querying.Services;
@@ -19,6 +20,7 @@ namespace Core.Querying.Infrastructure.Initialization
         {
             context.ConfigurationComplete += (o, e) =>
             {
+                context.Services.AddTransient<IFacetRegistry, FacetRegistry>();
                 context.Services.AddTransient<IContentDataQueryFactory, ContentDataQueryFactory>();
                 context.Services.AddSingleton<IContentDataQueryHandler, ContentDataQueryHandler>();
                 context.Services.AddSingleton<ICircuitBreaker, CircuitBreaker>();
