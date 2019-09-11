@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Querying.ExpressionBuilder.Generics;
+using Core.Querying.ExpressionBuilder.Helpers;
+using Core.Querying.ExpressionBuilder.Interfaces;
+using Core.Querying.ExpressionBuilder.Models.Response;
 using Core.Querying.Extensions;
-using Core.Querying.Find.Extensions;
-using Core.Querying.Find.Extensions.FacetBuilders;
-using Core.Querying.Find.Extensions.FilterBuilders;
-using Core.Querying.Find.Extensions.QueryBuilders;
-using Core.Querying.Find.Extensions.SortBuilders;
-using Core.Querying.Find.Helpers;
-using Core.Querying.Find.Models.Request;
-using Core.Querying.Find.Models.Response;
-using Core.Querying.Find.SearchRequests;
 using Core.Querying.Infrastructure.Configuration;
 using EPiServer.Core;
 using EPiServer.Find;
 using EPiServer.Find.Cms;
 using EPiServer.Find.Helpers;
+using SearchSortBuilderExtensions = Core.Querying.ExpressionBuilder.Generics.SearchSortBuilderExtensions;
+using WildCardQueryBuilderExtensions = Core.Querying.ExpressionBuilder.Generics.WildCardQueryBuilderExtensions;
 
 namespace Core.Querying.Services
 {
@@ -52,27 +49,27 @@ namespace Core.Querying.Services
                 {
                     foreach (var term in request.SearchTermFields)
                     {
-                        typeSearch = typeSearch.WildCardQuery(request.SearchTerm, term.Key, term.Value);
+                        typeSearch = WildCardQueryBuilderExtensions.WildCardQuery(typeSearch, request.SearchTerm, term.Key, term.Value);
                     }
                 }
             }
 
-            typeSearch = typeSearch.FilterForVisitor().Filter(request)
-                .FilterByLanguage(request)
-                .SortBy(request)
+            typeSearch = SearchSortBuilderExtensions.SortBy(typeSearch.FilterForVisitor().Filter(request)
+                    .FilterByLanguage(request), request)
                 .PagedBy(request);
             return typeSearch;
         }
         public SearchResponse<TContent> GenericSearch(ISearchRequest request)
         {
-            var typeSearch = CreateBaseContentSearch(request).AddFacetFor(request as IProductSearchRequest);
-            var results = typeSearch.GetContentResultSafe(SiteSettings.Instance.FindCacheTimeOutMinutes);
+            //var typeSearch = CreateBaseContentSearch(request).AddFacetFor(request);
+            //var results = typeSearch.GetContentResultSafe(SiteSettings.Instance.FindCacheTimeOutMinutes);
 
-            return new SearchResponse<TContent>
-            {
-                Items = results.ToPagedList(request, results.TotalMatching),
-                Facets = results.ExtractFacet(request.Facets)
-            };
+            //return new SearchResponse<TContent>
+            //{
+            //    Items = results.ToPagedList(request, results.TotalMatching),
+            //    Facets = results.ExtractFacet(request.Facets)
+            //};
+            return null;
         }
 
         public IEnumerable<ContentReference> ContentReferencesResult(int cacheForSeconds = 60, bool cacheForEditorsAndAdmins = false)

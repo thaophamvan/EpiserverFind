@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Querying.Find.Models.Request;
-using Core.Querying.Find.Models.Response;
+using Core.Querying.ExpressionBuilder.Interfaces;
+using Core.Querying.ExpressionBuilder.Models.Response;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
 using EPiServer.Find;

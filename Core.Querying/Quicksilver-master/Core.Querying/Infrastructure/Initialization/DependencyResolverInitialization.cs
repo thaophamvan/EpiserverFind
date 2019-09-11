@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using Core.Querying.Find.FacetRegistry;
+using Core.Querying.ExpressionBuilder.FacetRegistry;
 using Core.Querying.Infrastructure.Ioc;
 using Core.Querying.Infrastructure.ProtectedCall;
 using Core.Querying.Services;
@@ -25,12 +25,9 @@ namespace Core.Querying.Infrastructure.Initialization
                 context.Services.AddSingleton<IContentDataQueryHandler, ContentDataQueryHandler>();
                 context.Services.AddSingleton<ICircuitBreaker, CircuitBreaker>();
                 
-                context.Services.AddTransient<IMultipleSearchProvider, IMultipleSearchProvider>();
+                context.Services.AddTransient<IMultipleSearchProvider, MultipleSearchProvider>();
                 context.Services.AddTransient<EpiserverFindServices<IContent>>();
                 context.Services.AddTransient<CacheSearchServices<IContent>>();
-                context.Services.AddTransient<LuceneSearchServices<IContent>>();
-                context.Services.AddTransient<DatabaseSearchServices<IContent>>();
-
 
                 context.Services.AddTransient<Func<ServiceEnum, ISearchServices<IContent>>>(serviceProvider => key =>
                 {
@@ -40,16 +37,10 @@ namespace Core.Querying.Infrastructure.Initialization
                             return serviceProvider.GetInstance<EpiserverFindServices<IContent>>();
                         case ServiceEnum.Cache:
                             return serviceProvider.GetInstance<CacheSearchServices<IContent>>();
-                        case ServiceEnum.Lucene:
-                            return serviceProvider.GetInstance<LuceneSearchServices<IContent>>();
-                        case ServiceEnum.Database:
-                            return serviceProvider.GetInstance<DatabaseSearchServices<IContent>>();
                         default:
                             return null;
                     }
                 });
-
-
             };
         }
 

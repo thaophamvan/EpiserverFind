@@ -298,8 +298,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Find\Interfaces\ICanBeSearched.cs" />
-    <Compile Include="Find\Models\Response\SearchResponse.cs" />
+    <Compile Include="ExpressionBuilder\Attributes\NumberOfValuesAttribute.cs" />
+    <Compile Include="ExpressionBuilder\Attributes\SupportedOperationsAttribute.cs" />
+    <Compile Include="ExpressionBuilder\Common\Enumerations.cs" />
+    <Compile Include="ExpressionBuilder\Exceptions\UnsupportedOperationException.cs" />
+    <Compile Include="ExpressionBuilder\Generics\CatalogContentBaseFilterBuilderExtensions.cs" />
+    <Compile Include="ExpressionBuilder\Generics\ContentBaseFilterBuilderExtensions.cs" />
+    <Compile Include="ExpressionBuilder\Generics\GenericFilterBuilderExtensions.cs" />
+    <Compile Include="ExpressionBuilder\Helpers\BuilderHelper.cs" />
+    <Compile Include="ExpressionBuilder\Interfaces\IBuilderHelper.cs" />
+    <Compile Include="ExpressionBuilder\Interfaces\ISearchRequest.cs" />
+    <Compile Include="ExpressionBuilder\Models\DynamicParameter.cs" />
+    <Compile Include="ExpressionBuilder\Models\Request\FilterStatementRequestSpecification.cs" />
+    <Compile Include="ExpressionBuilder\Models\Request\SearchRequest.cs" />
+    <Compile Include="ExpressionBuilder\Interfaces\ICanBeSearched.cs" />
+    <Compile Include="ExpressionBuilder\Models\Response\SearchResponse.cs" />
     <Compile Include="Infrastructure\Configuration\ISiteSettingsProvider.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettings.cs" />
     <Compile Include="Infrastructure\Configuration\SiteSettingsProvider.cs" />
@@ -318,37 +331,28 @@
     <Compile Include="Extensions\TypeSearchExtensions.cs" />
     <Compile Include="Find\Conventions\SiteCatalogContentClientConventions.cs" />
     <Compile Include="Find\EventListeners\SiteCatalogContentEventListener.cs" />
-    <Compile Include="Find\Extensions\Content\ProductContentExtensions.cs" />
-    <Compile Include="Find\Extensions\Content\VariationExtensions.cs" />
-    <Compile Include="Find\Extensions\FacetBuilders\FacetBuilderExtensions.cs" />
-    <Compile Include="Find\Extensions\FilterBuilders\CatalogContentBaseFilterBuilderExtensions.cs" />
-    <Compile Include="Find\Extensions\FilterBuilders\ContentBaseFilterBuilderExtensions.cs" />
-    <Compile Include="Find\Extensions\FilterBuilders\GenericFilterBuilderExtensions.cs" />
-    <Compile Include="Find\Extensions\PagedExtension.cs" />
-    <Compile Include="Find\Extensions\QueryBuilders\WildCardQueryBuilderExtensions.cs" />
-    <Compile Include="Find\Extensions\SortBuilders\SortBuilderExtensions.cs" />
-    <Compile Include="Find\FacetRegistry\FacetRegistry.cs" />
-    <Compile Include="Find\FacetRegistry\FacetRegistryInitializationModule.cs" />
-    <Compile Include="Find\FacetRegistry\IFacetRegistry.cs" />
-    <Compile Include="Find\Helpers\AssemblyHelper.cs" />
-    <Compile Include="Find\Helpers\CategoryHelper.cs" />
-    <Compile Include="Find\Helpers\FacetHelper.cs" />
-    <Compile Include="Find\Helpers\PropertyInfoHelper.cs" />
-    <Compile Include="Find\Interfaces\IIndexService.cs" />
-    <Compile Include="Find\Interfaces\ISearchService.cs" />
-    <Compile Include="Find\Models\Availability\PriceRange.cs" />
-    <Compile Include="Find\Models\Availability\ProductAvailability.cs" />
-    <Compile Include="Find\Models\Request\FacetSpecification.cs" />
-    <Compile Include="Find\Models\Request\FilterSpecification.cs" />
-    <Compile Include="Find\Models\Request\ISearchRequest.cs" />
-    <Compile Include="Find\Models\Request\SearchRequest.cs" />
-    <Compile Include="Find\Models\Request\SortSpecification.cs" />
-    <Compile Include="Find\Models\Response\FacetFilter.cs" />
-    <Compile Include="Find\Models\Response\FacetGroup.cs" />
-    <Compile Include="Find\Models\Response\IPagedList.cs" />
-    <Compile Include="Find\Models\Response\PagedList.cs" />
-    <Compile Include="Find\SearchRequests\ProductSearchRequest.cs" />
-    <Compile Include="Find\Services\IndexService.cs" />
+    <Compile Include="Extensions\ProductContentExtensions.cs" />
+    <Compile Include="Extensions\VariationExtensions.cs" />
+    <Compile Include="ExpressionBuilder\Generics\FacetBuilderExtensions.cs" />
+    <Compile Include="Extensions\PagedExtension.cs" />
+    <Compile Include="ExpressionBuilder\Generics\WildCardQueryBuilderExtensions.cs" />
+    <Compile Include="ExpressionBuilder\Generics\SortBuilderExtensions.cs" />
+    <Compile Include="ExpressionBuilder\FacetRegistry\FacetRegistry.cs" />
+    <Compile Include="ExpressionBuilder\FacetRegistry\FacetRegistryInitializationModule.cs" />
+    <Compile Include="ExpressionBuilder\FacetRegistry\IFacetRegistry.cs" />
+    <Compile Include="ExpressionBuilder\Helpers\AssemblyHelper.cs" />
+    <Compile Include="ExpressionBuilder\Helpers\CategoryHelper.cs" />
+    <Compile Include="ExpressionBuilder\Helpers\PropertyInfoHelper.cs" />
+    <Compile Include="Services\IIndexService.cs" />
+    <Compile Include="ExpressionBuilder\Models\Availability\PriceRange.cs" />
+    <Compile Include="ExpressionBuilder\Models\Availability\ProductAvailability.cs" />
+    <Compile Include="ExpressionBuilder\Models\Request\FacetSpecification.cs" />
+    <Compile Include="ExpressionBuilder\Models\Request\SortSpecification.cs" />
+    <Compile Include="ExpressionBuilder\Models\Response\FacetFilter.cs" />
+    <Compile Include="ExpressionBuilder\Models\Response\FacetGroup.cs" />
+    <Compile Include="ExpressionBuilder\Models\Response\IPagedList.cs" />
+    <Compile Include="ExpressionBuilder\Models\Response\PagedList.cs" />
+    <Compile Include="Services\IndexService.cs" />
     <Compile Include="IContentDataQueryFactory.cs" />
     <Compile Include="IContentDataQueryHandler.cs" />
     <Compile Include="Infrastructure\Initialization\DependencyResolverInitialization.cs" />
@@ -364,8 +368,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchEngineType.cs" />
     <Compile Include="Services\CacheSearchServices.cs" />
-    <Compile Include="Services\DatabaseSearchServices.cs" />
-    <Compile Include="Services\LuceneSearchServices.cs" />
     <Compile Include="Services\ISearchServices.cs" />
     <Compile Include="Services\IMultipleSearchProvider.cs" />
     <Compile Include="Services\EpiserverFindServices.cs" />
@@ -392,5 +394,6 @@
   <ItemGroup>
     <Content Include="Task.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

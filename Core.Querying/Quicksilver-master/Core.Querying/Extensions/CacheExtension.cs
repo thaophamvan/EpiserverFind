@@ -1,6 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using Core.Querying.Find.Models.Request;
+using Core.Querying.ExpressionBuilder.Interfaces;
 
 namespace Core.Querying.Extensions
 {
@@ -21,12 +22,12 @@ namespace Core.Querying.Extensions
                 searchTermFields = $"{searchTermFields}-{pair.Key}:{pair.Value}";
             }
             var filterSpecificationLanguage = request.Filters.Language.Name;
-            var filterSpecificationCultureInfo = request.Filters.CultureInfo.Name;
 
             var filterSpecificationITem = "";
             foreach (var item in request.Filters.Items)
             {
-                filterSpecificationITem = $"{filterSpecificationITem}-{item.Field}";
+                filterSpecificationITem = $"{filterSpecificationITem}-{item.Connector}-{item.OperationValue}-{item.PropertyId}" +
+                                          $"-{item.PropertyType}-{string.Join("-", item.Parameters.Select(v => v.Value))}";
             }
 
             var sorts = "";
@@ -38,11 +39,11 @@ namespace Core.Querying.Extensions
             var facet = "";
             foreach (var item in request.Facets.Items)
             {
-                sorts = $"{facet}-{item.Field}:{item.DataType}";
+                sorts = $"{facet}-{item.PropertyId}:{item.PropertyType}";
             }
 
             var cacheKey = $"{marketId}_{useWildCardSearch}_{searchTerm}_{filterSearchTerm}_{pageNumber}_{pageSize}" +
-                           $"_{filterSpecificationLanguage}_{filterSpecificationCultureInfo}_{sorts}";
+                           $"_{filterSpecificationLanguage}_{sorts}";
             return cacheKey.Md5Hash();
         }
 

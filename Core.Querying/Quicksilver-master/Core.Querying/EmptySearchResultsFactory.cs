@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Querying.Find.Models.Response;
+using Core.Querying.ExpressionBuilder.Models.Response;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 

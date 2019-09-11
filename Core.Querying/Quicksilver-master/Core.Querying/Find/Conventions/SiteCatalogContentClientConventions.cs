@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Querying.Extensions;
 using Core.Querying.Find.Extensions.Content;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Find;

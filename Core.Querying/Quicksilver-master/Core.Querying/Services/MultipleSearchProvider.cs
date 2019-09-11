@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Reflection;
+using Core.Querying.ExpressionBuilder.Interfaces;
+using Core.Querying.ExpressionBuilder.Models.Response;
 using Core.Querying.Extensions;
-using Core.Querying.Find.Models.Request;
-using Core.Querying.Find.Models.Response;
 using Core.Querying.Infrastructure.Configuration;
 using Core.Querying.Infrastructure.ProtectedCall;
 using Core.Querying.Shared;
 using EPiServer.Core;
+using EPiServer.Find;
 
 namespace Core.Querying.Services
 {
